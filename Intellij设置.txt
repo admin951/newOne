@@ -1,4 +1,6 @@
-﻿初始设置
+﻿111
+
+初始设置
 1. 复制maven设置文件到指定位置：%userprofile%\.m2\settings.xml，该文件可从wiki上下载。
 2. Ingellij运行使用的JDK版本为1.8，开发程序使用的JDK版本为1.6
 
