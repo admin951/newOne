@@ -1,0 +1,40 @@
+﻿初始设置
+1. 复制maven设置文件到指定位置：%userprofile%\.m2\settings.xml，该文件可从wiki上下载。
+2. Ingellij运行使用的JDK版本为1.8，开发程序使用的JDK版本为1.6
+
+导入项目
+1. 在资源管理器中，使用svn工具checkout相应项目
+2. 打开Intellij，File->New->Project From Existing Sources
+3. 选择Application对应的pom文件（如ContractSigningApp\pom.xml）
+   注：maven版本需要选2.0
+4. 更改编码为GBK，File->Settings->Editor->File Encodings（找不到可搜索encoding），将所有的编码都改为GBK，勾选Transparent native-to-ascii conversion
+   
+在项目中添加SISClientDebugPrj
+1. 在资源管理器中，使用svn工具checkout相应项目
+2. 打开Intellij，File->New->Module From Existing Sources
+3. 选择对应的pom文件
+   注：maven版本需要选2.0
+4. 导入后，在左侧树结构中选中该module，右键选择module settings（F4）
+5. 将此module的名字改为 SISClientDebugPrj_项目名，如SISClientDebugPrj_ContractSigning
+
+运行程序
+在Run/Debug Configuration界面中，新建“Application”，参数填写如下：
+Main Class: com.smec.sis.SISMain
+VM options: VM options: -javaagent:C:\Users\jangrl\.m2\repository\org\aspectj\aspectjweaver\1.7.2\aspectjweaver-1.7.2.jar -XX:MaxPermSize=128m
+            注：请根据自己maven本地库的位置来设定aspectjweaver-1.7.2.jar的所在路径
+Working directory: SISClientDebugPrj所在目录，如：C:\mywork\SISClientDebugPrj
+Use classpath of module: 选择SISClientDebugPrj所在模块
+JRE：1.6
+
+Weblogic远程调试
+在Run/Debug Configuration界面中，新建“Remote”，参数填写如下：
+Transport: Socket
+Debugger mode: Attach
+Host: weblogic的ip地址
+port：4000
+Search sources using module's classpath: 选择相应Service模块，如ContractSigningService
+
+程序界面乱码问题
+这是intellij未在编译时，对properties文件进行native2ascii转换造成的。
+解决方法一：在调试程序前，先编译，然后进行一次pom的install
+解决方法一：使用ant脚本，在调试程序前执行一次native2ascii
